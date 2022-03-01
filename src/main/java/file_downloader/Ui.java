@@ -12,6 +12,10 @@ import static javax.security.auth.callback.ConfirmationCallback.INFORMATION;
 public class Ui extends JFrame implements
         ActionListener, Runnable {
 
+    private final JCheckBox[] checkboxes = new JCheckBox[4];
+    private final ButtonGroup group = new ButtonGroup();
+    private final ButtonGroup group_2 = new ButtonGroup();
+    private final JRadioButton[] radioButtons = new JRadioButton[5];
     private JPanel main_panel;
     private JLabel file_name_label;
     private JTextField file_name_textfield;
@@ -20,18 +24,14 @@ public class Ui extends JFrame implements
     private JPanel fileExtensionsPanel;
     private JLabel file_type_label;
     private JComboBox<String> file_ext_combobox;
-    private final JCheckBox[] checkboxes = new JCheckBox[4];
     private JCheckBox pdf_checkbox;
     private JCheckBox png_checkbox;
     private JCheckBox docx_checkbox;
     private JCheckBox jpg_checkbox;
     private JLabel empty_space_label;
-    private final ButtonGroup group = new ButtonGroup();
-    private final ButtonGroup group_2 = new ButtonGroup();
     private JLabel directories_label;
     private JPanel directories_panel;
     private JLabel empty_space_label2;
-    private final JRadioButton[] radioButtons = new JRadioButton[5];
     private JRadioButton desktop_radiobutton;
     private JRadioButton downloads_radiobutton;
     private JRadioButton onedrive_radiobutton;
@@ -229,12 +229,21 @@ public class Ui extends JFrame implements
 }
 
 class DownloadProgress extends JFrame implements Runnable {
-    private JLabel download_label;
     private final JPanel main_panel = new JPanel();
     private final JProgressBar download_progressbar = new JProgressBar();
+    private JLabel download_label;
 
     public DownloadProgress() {
         run();
+    }
+
+    private static void percent_counter(int total, int current) {
+        while (current <= total) {
+            double percent = (double) current / total;
+            int percent_int = (int) (percent * 100);
+            System.out.println("Downloading: " + percent_int + "%");
+            current++;
+        }
     }
 
     @Override
@@ -285,20 +294,5 @@ class DownloadProgress extends JFrame implements Runnable {
         });
         percent_counter(100, 0);
         thread.start();
-    }
-
-    private static void percent_counter(int total, int current) {
-        while (current <= total) {
-            double percent = (double) current / total;
-            int percent_int = (int) (percent * 100);
-            System.out.println("Downloading: " + percent_int + "%");
-            current++;
-        }
-    }
-
-
-    public static void main(String[] args) {
-        Main.dark_mode();
-        new DownloadProgress();
     }
 }
