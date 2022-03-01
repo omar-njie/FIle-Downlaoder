@@ -1,0 +1,12 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="File-Downloader:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/File_Downloader_jar</output-path>
+    <root id="archive" name="File-Downloader.jar">
+      <element id="module-output" name="File-Downloader" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/formdev/flatlaf-intellij-themes/1.6.5/flatlaf-intellij-themes-1.6.5.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/org.apache.commons.io_.jar_/org.apache.commons.io.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/formdev/flatlaf/1.6.5/flatlaf-1.6.5.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jetbrains/annotations/23.0.0/annotations-23.0.0.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
