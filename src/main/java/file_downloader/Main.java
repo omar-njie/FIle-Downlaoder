@@ -1,7 +1,5 @@
 package file_downloader;
 
-import com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatMaterialDeepOceanContrastIJTheme;
-
 import javax.swing.*;
 
 public class Main {
