@@ -8,16 +8,9 @@ public class Main {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            dark_mode();
+            Themes.dark_mode();
             new Ui();
         });
     }
 
-    public static void dark_mode() {
-        try {
-            UIManager.setLookAndFeel(new FlatMaterialDeepOceanContrastIJTheme());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }
