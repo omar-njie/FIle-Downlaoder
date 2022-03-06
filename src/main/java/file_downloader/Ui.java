@@ -257,6 +257,7 @@ class DownloadProgress extends JFrame implements Runnable {
         this.setVisible(true);
         main_panel.setLayout(new BorderLayout());
         this.add(main_panel);
+        System.out.println("I like java!!!");
 
         Font font = new Font("JetBrainsMono Nerd Font Mono", Font.BOLD, 25);
 
