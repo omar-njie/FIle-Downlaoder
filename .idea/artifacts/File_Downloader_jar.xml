@@ -1,18 +1,15 @@
 <component name="ArtifactManager">
-  <artifact name="File-Downloader:jar">
+  <artifact type="jar" name="File-Downloader:jar">
     <output-path>$PROJECT_DIR$/out/artifacts/File_Downloader_jar</output-path>
-    <root id="root">
-      <element id="archive" name="File-Downloader.jar">
-        <element id="directory" name="META-INF">
-          <element id="file-copy" path="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" />
-        </element>
-        <element id="module-output" name="File-Downloader" />
+    <root id="archive" name="File-Downloader.jar">
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" />
       </element>
-      <element id="library" level="project" name="org.apache.commons.io_" />
-      <element id="library" level="project" name="Maven: com.formdev:flatlaf:1.6.5" />
-      <element id="library" level="project" name="Maven: com.formdev:flatlaf-intellij-themes:1.6.5" />
-      <element id="library" level="project" name="Maven: commons-io:commons-io:2.11.0" />
-      <element id="library" level="project" name="Maven: org.jetbrains:annotations:23.0.0" />
+      <element id="module-output" name="File-Downloader" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jetbrains/annotations/23.0.0/annotations-23.0.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/formdev/flatlaf/1.6.5/flatlaf-1.6.5.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/formdev/flatlaf-intellij-themes/1.6.5/flatlaf-intellij-themes-1.6.5.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/commons-io/commons-io/2.11.0/commons-io-2.11.0.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>
