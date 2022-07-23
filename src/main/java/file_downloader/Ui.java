@@ -223,11 +223,27 @@ public class Ui extends JFrame implements
         }
         String[] dirs = new String[5];
         // get the directories
-        String desktop = System.getProperty("user.home") + "\\Desktop\\";
-        String documents = System.getProperty("user.home") + "\\Documents\\";
-        String downloads = System.getProperty("user.home") + "\\Downloads\\";
-        String pictures = System.getProperty("user.home") + "\\Pictures\\";
-        String onedrive = System.getProperty("user.home") + "\\OneDrive\\";
+        String os_name = System.getProperty("os.name").toLowerCase();
+        boolean is_windows = os_name.contains("windows");
+        boolean is_mac = os_name.contains("mac");
+        boolean is_linux = os_name.contains("linux");
+        String desktop = "";
+        String documents = "";
+        String downloads = "";
+        String pictures = "";
+        String onedrive = "";
+        if (is_windows) {
+            desktop = System.getProperty("user.home") + "\\Desktop\\";
+            documents = System.getProperty("user.home") + "\\Documents\\";
+            downloads = System.getProperty("user.home") + "\\Downloads\\";
+            pictures = System.getProperty("user.home") + "\\Pictures\\";
+            onedrive = System.getProperty("user.home") + "\\OneDrive\\";
+        }
+        if (is_mac || is_linux) {
+            desktop = System.getProperty("user.home") + "/Desktop/";
+            documents = System.getProperty("user.home") + "/Documents/";
+            downloads = System.getProperty("user.home") + "/Downloads/";
+        }
 
         dirs[0] = desktop;
         dirs[1] = downloads;
