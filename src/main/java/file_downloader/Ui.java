@@ -274,7 +274,11 @@ public class Ui extends JFrame implements
                 UIManager.put("OptionPane.messageFont", new Font("JetBrainsMono Nerd Font Mono", Font.BOLD, 20));
                 JOptionPane.showMessageDialog(null, msg, "Success", INFORMATION);
                 try {
-                    new Downloader(new URL(get_link), path + "\\" + get_file_name + "." + file_type);
+                    if (is_windows) {
+                        new Downloader(new URL(get_link), path + "\\" + get_file_name + "." + file_type);
+                    } else if (is_mac || is_linux) {
+                        new Downloader(new URL(get_link), path + "/" + get_file_name + "." + file_type);
+                    }
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
