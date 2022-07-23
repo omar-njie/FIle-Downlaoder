@@ -11,4 +11,4 @@
 ---
 
 # Jar Files
-    [Download jar file here:](https://github.com/omar-njie/FIle-Downlaoder/tree/main/out/artifacts/File_Downloader_jar)
+[Download the Jar files](https://github.com/omar-njie/FIle-Downlaoder/tree/main/out/artifacts/File_Downloader_jar)
