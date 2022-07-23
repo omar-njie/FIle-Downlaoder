@@ -1,2 +1,13 @@
-# FIle-Downlaoder
-This program is a file downloader written in java it supports multiple file types.
+# File-Downloader
+
+# Dependencies
+
+* Java 8+
+* Java Swing
+* FlatLaf
+* Flatlaf IntelliJ themes
+* FileUtils from apache commons api
+
+---
+
+# Jar File

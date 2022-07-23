@@ -40,40 +40,70 @@ public class Ui extends JFrame implements
     private JRadioButton custom_radiobutton;
     private JButton download_button;
 
-    public Ui() {
-        run();
-    }
+    private final JMenuBar menu_bar = new JMenuBar();
+    private final JMenu settings = new JMenu("Settings");
+    private final JMenuItem reload = new JMenuItem("Reload");
+    private final JMenuItem themes = new JMenuItem("Themes");
+    private final JMenuItem exit = new JMenuItem("Exit");
 
     @Override
     public void run() {
         this.setTitle("File Downloader");
         this.setContentPane(main_panel);
+        this.setJMenuBar(menu_bar);
         this.setSize(500, 482);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
 
+        settings.setFont(new Font("FiraCode Nerd Font", Font.BOLD, 20));
+        Settings.menu_items(reload, themes, exit, menu_bar, settings, themes);
+        settings.addSeparator();
+        settings.add(exit);
+
+       settings.setToolTipText(
+               "<html><ul>" +
+                       "<li>" +
+                            "<h3>Drop Settings Menu ALT+F</h3>" +
+                       "</li>" +
+                       "<li>" +
+                            "<h3>Reload CTRL+R</h3>" +
+                       "</li>" +
+                       "<li>" +
+                       "<h3>Themes CTRL+T</h3>" +
+                       "</li>" +
+                       "<li>" +
+                            "<h3>Exit CTRL+E</h3>" +
+                       "</li>" +
+               "</ul></html>");
+        reload.setToolTipText("<html><h3>Reload settings</h3></html>");
+        themes.setToolTipText("<html><h3>Change theme</h3></html>");
+        exit.setToolTipText("<html><h3>Exit</h3></html>");
+
+        // shortcuts
+        settings.setMnemonic('S');
+        reload.setAccelerator(KeyStroke.getKeyStroke('R', Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
+        themes.setAccelerator(KeyStroke.getKeyStroke('T', Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
+        exit.setAccelerator(KeyStroke.getKeyStroke('E', Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
+
+
+
         file_name_label.setText("File Name");
         file_name_textfield.putClientProperty("JComponent.roundRect", true);
-        fileExtensionsPanel:
-        {
+        fileExtensionsPanel: {
             file_type_label.setText("File Type");
             file_ext_combobox.putClientProperty("JComponent.roundRect", true);
             pdf_checkbox.setText("pdf");
             docx_checkbox.setText("docx");
             jpg_checkbox.setText("jpg");
             png_checkbox.setText("png");
-            file_ext_combobox.addItem("pdf");
-            file_ext_combobox.addItem("docx");
-            file_ext_combobox.addItem("jpg");
-            file_ext_combobox.addItem("png");
             file_ext_combobox.addItem("java");
             file_ext_combobox.addItem("py");
             file_ext_combobox.addItem("cpp");
             file_ext_combobox.addItem("c");
+            file_ext_combobox.addItem("js");
             file_ext_combobox.addItem("html");
             file_ext_combobox.addItem("css");
-            file_ext_combobox.addItem("js");
             group.add(pdf_checkbox);
             group.add(docx_checkbox);
             group.add(jpg_checkbox);
@@ -91,8 +121,7 @@ public class Ui extends JFrame implements
             link_textfield.putClientProperty("JComponent.roundRect", true);
 
             directories_label.setText("Directories");
-            directories_panel:
-            {
+            directories_panel: {
                 desktop_radiobutton.setText("Desktop");
                 downloads_radiobutton.setText("Downloads");
                 onedrive_radiobutton.setText("OneDrive");
@@ -120,16 +149,26 @@ public class Ui extends JFrame implements
             download_button.setText("Download");
             download_button.putClientProperty("JButton.buttonType", "roundRect");
             download_button.addActionListener(this);
+            themes.addActionListener(this);
+            reload.addActionListener(this);
+            exit.addActionListener(this);
 
             download_button.setEnabled(false);
 
         }
-
-
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
+    /**
+     * <p>
+     *     <h1>
+     *          This method is used to check if the user
+     *          has selected a checkbox or a radiobutton if
+     *          that's the case then enable the download button.
+     *     </h1>
+     * </p>
+     *
+     */
+    private void download_btn_enabler() {
         // check if the download button is clicked
         Enumeration<AbstractButton> checked = group.getElements();
         Enumeration<AbstractButton> checked2 = group_2.getElements();
@@ -139,7 +178,6 @@ public class Ui extends JFrame implements
                 if (checkboxes[i].isSelected()) {
                     download_button.setEnabled(true);
                     getRootPane().setDefaultButton(download_button);
-                    // break;
                 }
             }
             for (int i = 0; i < 5; i++) {
@@ -147,23 +185,30 @@ public class Ui extends JFrame implements
                 if (radioButtons[i].isSelected()) {
                     download_button.setEnabled(true);
                     getRootPane().setDefaultButton(download_button);
-                    //   break;
                 }
             }
             custom_radiobutton = (JRadioButton) checked2.nextElement();
             if (custom_radiobutton.isSelected()) {
                 download_button.setEnabled(true);
                 getRootPane().setDefaultButton(download_button);
-                // break;
             }
-
         } while (checked.hasMoreElements() && checked2.hasMoreElements());
+    }
 
 
+    /**
+     * <p>
+     *     <h2>
+     *         This method is responsible for getting the directory and
+     *         downloading the file.
+     *     </h2>
+     * </p>
+     *
+     */
+    public void download() {
         String get_link = link_textfield.getText();
         String get_file_name = file_name_textfield.getText();
         String file_type = "";
-
 
         // loop through checkboxes to get file type
         for (JCheckBox checkbox : checkboxes) {
@@ -171,62 +216,92 @@ public class Ui extends JFrame implements
                 file_type = checkbox.getText();
             }
         }
-        if (e.getSource() == download_button) {
-            if (file_name_textfield.getText().isEmpty() || link_textfield.getText().isEmpty()) {
-                UIManager.put("OptionPane.messageFont", new Font("JetBrainsMono Nerd Font Mono", Font.BOLD, 25));
-                JOptionPane.showMessageDialog(null, "Please fill all the fields", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-            String[] dirs = new String[5];
-            // get the directories
-            String desktop = System.getProperty("user.home") + "\\Desktop\\";
-            String documents = System.getProperty("user.home") + "\\Documents\\";
-            String downloads = System.getProperty("user.home") + "\\Downloads\\";
-            String pictures = System.getProperty("user.home") + "\\Pictures\\";
-            String onedrive = System.getProperty("user.home") + "\\OneDrive\\";
-            dirs[0] = desktop;
-            dirs[1] = downloads;
-            dirs[2] = onedrive;
-            dirs[3] = documents;
-            dirs[4] = pictures;
-            for (int i = 0; i < 5; i++) {
-                if (radioButtons[i].isSelected()) {
-                    try {
-                        new DownloadProgress();
-                        new Downloader(new URL(get_link), dirs[i] + get_file_name + "." + file_type);
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
-                    }
-                    System.out.println("Directory: " + dirs[i] + " File Name: " + get_file_name + "." + file_type);
+
+        if (file_name_textfield.getText().isEmpty() || link_textfield.getText().isEmpty()) {
+            UIManager.put("OptionPane.messageFont", new Font("JetBrainsMono Nerd Font Mono", Font.BOLD, 25));
+            JOptionPane.showMessageDialog(null, "Please fill all the fields", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        String[] dirs = new String[5];
+        // get the directories
+        String desktop = System.getProperty("user.home") + "\\Desktop\\";
+        String documents = System.getProperty("user.home") + "\\Documents\\";
+        String downloads = System.getProperty("user.home") + "\\Downloads\\";
+        String pictures = System.getProperty("user.home") + "\\Pictures\\";
+        String onedrive = System.getProperty("user.home") + "\\OneDrive\\";
+
+        dirs[0] = desktop;
+        dirs[1] = downloads;
+        dirs[2] = onedrive;
+        dirs[3] = documents;
+        dirs[4] = pictures;
+
+        for (int i = 0; i < 5; i++) {
+            if (radioButtons[i].isSelected()) {
+                try {
+                    new Downloader(new URL(get_link), dirs[i] + get_file_name + "." + file_type);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
                 }
+                System.out.println("Directory: " + dirs[i] + " File Name: " + get_file_name + "." + file_type);
             }
-            if (custom_radiobutton.isSelected()) {
-                // choose the directory via JFileChooser
-                JFileChooser fileChooser = new JFileChooser();
-                fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-                int return_value = fileChooser.showOpenDialog(null);
-                if (return_value == JFileChooser.APPROVE_OPTION) {
-                    String path = fileChooser.getSelectedFile().getPath();
-                    String msg = """
-                            You have chosen the directory: \n\040
-                            """ + path;
-                    UIManager.put("OptionPane.messageFont", new Font("JetBrainsMono Nerd Font Mono", Font.BOLD, 20));
-                    JOptionPane.showMessageDialog(null, msg, "Success", INFORMATION);
-                    try {
-                        new Downloader(new URL(get_link), path + "\\" + get_file_name + "." + file_type);
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
-                    }
-                } else {
-                    String msg = """
+        }
+        if (custom_radiobutton.isSelected()) {
+            // choose the directory via JFileChooser
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            int return_value = fileChooser.showOpenDialog(null);
+            if (return_value == JFileChooser.APPROVE_OPTION) {
+                String path = fileChooser.getSelectedFile().getPath();
+                String msg = """
+                           You have chosen the directory: \n\040
+                             """ + path;
+                UIManager.put("OptionPane.messageFont", new Font("JetBrainsMono Nerd Font Mono", Font.BOLD, 20));
+                JOptionPane.showMessageDialog(null, msg, "Success", INFORMATION);
+                try {
+                    new Downloader(new URL(get_link), path + "\\" + get_file_name + "." + file_type);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            } else {
+                String msg = """
                             Please select a directory!
-                            """.indent(1);
-                    UIManager.put("OptionPane.messageFont", new Font("JetBrainsMono Nerd Font Mono", Font.BOLD, 25));
-                    JOptionPane.showMessageDialog(null, msg);
-                }
+                             """.indent(1);
+                UIManager.put("OptionPane.messageFont", new Font("JetBrainsMono Nerd Font Mono", Font.BOLD, 25));
+                JOptionPane.showMessageDialog(null, msg);
             }
         }
     }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == exit) {
+            System.exit(0);
+        }
+        if (e.getSource() == reload) {
+            file_name_textfield.setText("");
+            file_ext_combobox.setSelectedIndex(0);
+            link_textfield.setText("");
+
+            for (int i = 0; i < 4; i++) {
+                group.clearSelection();
+            }
+
+            for (int i = 0; i < 5; i++) {
+                group_2.clearSelection();
+            }
+
+            download_button.setEnabled(false);
+
+        }
+
+        download_btn_enabler();
+
+        if (e.getSource() == download_button) {
+            download();
+        }
+    }
 }
+
 
 class DownloadProgress extends JFrame implements Runnable {
     private final JPanel main_panel = new JPanel();
@@ -241,7 +316,13 @@ class DownloadProgress extends JFrame implements Runnable {
         while (current <= total) {
             double percent = (double) current / total;
             int percent_int = (int) (percent * 100);
-            System.out.println("Downloading: " + percent_int + "%");
+
+            try {
+                Thread.sleep(55);
+                System.out.println("Downloading: " + percent_int + "%");
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
             current++;
         }
     }
@@ -252,12 +333,11 @@ class DownloadProgress extends JFrame implements Runnable {
         this.setSize(395, 115);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setLocationRelativeTo(null);
-        this.setResizable(true);
+        this.setResizable(false);
         this.setLayout(new BorderLayout());
         this.setVisible(true);
         main_panel.setLayout(new BorderLayout());
         this.add(main_panel);
-        System.out.println("I like java!!!");
 
         Font font = new Font("JetBrainsMono Nerd Font Mono", Font.BOLD, 25);
 
@@ -272,6 +352,11 @@ class DownloadProgress extends JFrame implements Runnable {
         fill();
     }
 
+    /**
+     * <h2>Fill progress bar.</h2>
+     * <h2>windows disposed after 1000ms depending on the download speed.</h2>
+     *
+     */
     public void fill() {
         Thread thread = new Thread(() -> {
             int counter = 0;
@@ -297,3 +382,4 @@ class DownloadProgress extends JFrame implements Runnable {
         thread.start();
     }
 }
+
