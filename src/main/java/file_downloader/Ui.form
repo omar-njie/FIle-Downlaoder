@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="file_downloader.Ui">
-  <grid id="27dc6" binding="main_panel" layout-manager="GridLayoutManager" row-count="8" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+  <grid id="27dc6" binding="main_panel" layout-manager="GridLayoutManager" row-count="9" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
-      <xy x="20" y="20" width="500" height="402"/>
+      <xy x="20" y="20" width="575" height="444"/>
     </constraints>
     <properties/>
     <border type="none"/>
@@ -30,7 +30,7 @@
       <grid id="7b0" binding="fileExtensionsPanel" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
-          <grid row="6" column="1" row-span="1" col-span="3" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <grid row="7" column="1" row-span="1" col-span="3" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties/>
         <border type="none"/>
@@ -112,7 +112,7 @@
       </grid>
       <component id="e6f0c" class="javax.swing.JTextField" binding="link_textfield">
         <constraints>
-          <grid row="4" column="1" row-span="1" col-span="3" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+          <grid row="5" column="1" row-span="1" col-span="3" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
           </grid>
         </constraints>
@@ -122,7 +122,7 @@
       </component>
       <component id="15db3" class="javax.swing.JLabel" binding="link_label">
         <constraints>
-          <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="9" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="9" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <font name="JetBrainsMono Nerd Font Mono" size="25" style="1"/>
@@ -131,7 +131,7 @@
       </component>
       <component id="5b2b" class="javax.swing.JLabel" binding="directories_label">
         <constraints>
-          <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="9" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="9" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <font name="JetBrainsMono Nerd Font Mono" size="25" style="1"/>
@@ -150,24 +150,6 @@
       <component id="1b118" class="javax.swing.JCheckBox" binding="pdf_checkbox">
         <constraints>
           <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <font name="FiraCode Nerd Font" size="25" style="1"/>
-          <text value="CheckBox"/>
-        </properties>
-      </component>
-      <component id="9fe55" class="javax.swing.JCheckBox" binding="docx_checkbox">
-        <constraints>
-          <grid row="2" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <font name="FiraCode Nerd Font" size="25" style="1"/>
-          <text value="CheckBox"/>
-        </properties>
-      </component>
-      <component id="552fc" class="javax.swing.JCheckBox" binding="jpg_checkbox">
-        <constraints>
-          <grid row="3" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <font name="FiraCode Nerd Font" size="25" style="1"/>
@@ -193,7 +175,7 @@
       </component>
       <component id="9f0e8" class="javax.swing.JLabel" binding="empty_space_label">
         <constraints>
-          <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <text value="                            "/>
@@ -201,11 +183,47 @@
       </component>
       <component id="f54ab" class="javax.swing.JButton" binding="download_button">
         <constraints>
-          <grid row="7" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="8" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <font name="JetBrainsMono Nerd Font Mono" size="20" style="1"/>
           <text value="Button"/>
+        </properties>
+      </component>
+      <component id="8229f" class="javax.swing.JCheckBox" binding="_exe_checkbox">
+        <constraints>
+          <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="FiraCode Nerd Font" size="25" style="1"/>
+          <text value="CheckBox"/>
+        </properties>
+      </component>
+      <component id="9fe55" class="javax.swing.JCheckBox" binding="docx_checkbox">
+        <constraints>
+          <grid row="2" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="FiraCode Nerd Font" size="25" style="1"/>
+          <text value="CheckBox"/>
+        </properties>
+      </component>
+      <component id="552fc" class="javax.swing.JCheckBox" binding="jpg_checkbox">
+        <constraints>
+          <grid row="3" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="FiraCode Nerd Font" size="25" style="1"/>
+          <text value="CheckBox"/>
+        </properties>
+      </component>
+      <component id="12480" class="javax.swing.JCheckBox" binding="_dmg_checkbox">
+        <constraints>
+          <grid row="4" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="FiraCode Nerd Font" size="25" style="1"/>
+          <text value="CheckBox"/>
         </properties>
       </component>
     </children>
