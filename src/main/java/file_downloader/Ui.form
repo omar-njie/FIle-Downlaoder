@@ -190,15 +190,6 @@
           <text value="Button"/>
         </properties>
       </component>
-      <component id="8229f" class="javax.swing.JCheckBox" binding="_exe_checkbox">
-        <constraints>
-          <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <font name="FiraCode Nerd Font" size="25" style="1"/>
-          <text value="CheckBox"/>
-        </properties>
-      </component>
       <component id="9fe55" class="javax.swing.JCheckBox" binding="docx_checkbox">
         <constraints>
           <grid row="2" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
@@ -220,6 +211,15 @@
       <component id="12480" class="javax.swing.JCheckBox" binding="_dmg_checkbox">
         <constraints>
           <grid row="4" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="FiraCode Nerd Font" size="25" style="1"/>
+          <text value="CheckBox"/>
+        </properties>
+      </component>
+      <component id="8229f" class="javax.swing.JCheckBox" binding="_exe_checkbox">
+        <constraints>
+          <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <font name="FiraCode Nerd Font" size="25" style="1"/>

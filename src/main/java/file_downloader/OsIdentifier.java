@@ -1,19 +1,10 @@
 package file_downloader;
 
-public class OsIdentifier {
+public record OsIdentifier(String os_name) {
 
-    private String os_name;
-
-    public OsIdentifier(String os_name) {
-        this.os_name = os_name;
-    }
-
-    public String getOs_name() {
+    @Override
+    public String os_name() {
         return System.getProperty("os.name").toLowerCase();
-    }
-
-    public void setOs_name(String os_name) {
-        this.os_name = os_name;
     }
 
     public boolean is_windows() {
@@ -30,7 +21,7 @@ public class OsIdentifier {
 
     /**
      * <h2>
-     *     Prompt error message dialog box if the text-fields are not filed
+     * Prompt error message dialog box if the text-fields are not filed
      * </h2>
      * <pre>{@code
      * // This section only:

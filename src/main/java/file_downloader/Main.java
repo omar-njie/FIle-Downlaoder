@@ -1,7 +1,6 @@
 package file_downloader;
 
 import javax.swing.*;
-import themes.Dark;
 
 
 public class Main {

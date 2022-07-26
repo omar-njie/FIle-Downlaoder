@@ -2,7 +2,6 @@ package file_downloader;
 
 import org.apache.commons.io.FileUtils;
 
-import javax.swing.*;
 import java.io.File;
 import java.net.URL;
 

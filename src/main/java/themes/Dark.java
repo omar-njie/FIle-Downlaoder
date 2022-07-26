@@ -6,7 +6,7 @@ import javax.swing.*;
 
 public class Dark implements Runnable {
 
-    private int thread_number;
+    private final int thread_number;
 
     public Dark(int thread_number) {
         this.thread_number = thread_number;

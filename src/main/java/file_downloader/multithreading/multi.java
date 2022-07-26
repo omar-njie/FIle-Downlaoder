@@ -1,10 +1,8 @@
 package file_downloader.multithreading;
 
-import javax.management.relation.RelationNotFoundException;
-
 public class multi implements Runnable {
 
-    private int thread_number;
+    private final int thread_number;
     public multi(int thread_number) {
         this.thread_number = thread_number;
     }

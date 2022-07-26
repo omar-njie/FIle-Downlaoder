@@ -40,7 +40,7 @@ public class Settings extends JFrame implements Runnable, ActionListener {
         this.setLocationRelativeTo(null);
         this.setVisible(true);
 
-        menu_items(reload, exit, exit, menu_bar, settings, exit);
+        menu_items(reload, exit, menu_bar, settings, exit);
 
         theme_label.setText("Themes");
         dark_checkbox.setText("Dark Mode");
@@ -61,7 +61,7 @@ public class Settings extends JFrame implements Runnable, ActionListener {
 
     }
 
-    static void menu_items(JMenuItem reload, JMenuItem exit, JMenuItem jMenuItem, JMenuBar menu_bar, JMenu settings, JMenuItem exit2) {
+    static void menu_items(JMenuItem reload, JMenuItem exit, JMenuBar menu_bar, JMenu settings, JMenuItem exit2) {
         settings.setFont(new Font("FiraCode Nerd Font", Font.BOLD, 18));
         reload.setFont(new Font("JetBrainsMono Nerd Font", Font.BOLD, 18));
         exit.setFont(new Font("JetBrainsMono Nerd Font", Font.BOLD, 18));

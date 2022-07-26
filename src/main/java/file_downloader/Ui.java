@@ -5,7 +5,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.Enumeration;
+import java.util.List;
 
 import static javax.security.auth.callback.ConfirmationCallback.INFORMATION;
 
@@ -47,10 +49,6 @@ public class Ui extends JFrame implements
     private final JMenuItem reload = new JMenuItem("Reload");
     private final JMenuItem themes = new JMenuItem("Themes");
     private final JMenuItem exit = new JMenuItem("Exit");
-    String os_name = System.getProperty("os.name").toLowerCase();
-    boolean is_windows = os_name.contains("windows");
-    boolean is_mac = os_name.contains("mac");
-    boolean is_linux = os_name.contains("linux");
     public String os;
     OsIdentifier os_identifier;
 
@@ -65,28 +63,31 @@ public class Ui extends JFrame implements
         this.setVisible(true);
 
         settings.setFont(new Font("FiraCode Nerd Font", Font.BOLD, 20));
-        Settings.menu_items(reload, themes, exit, menu_bar, settings, themes);
+        Settings.menu_items(reload, themes, menu_bar, settings, themes);
         settings.addSeparator();
         settings.add(exit);
 
-       settings.setToolTipText(
-               "<html><ul>" +
-                       "<li>" +
+        // Tooltips Tests
+        {
+            settings.setToolTipText(
+                    "<html><ul>" +
+                            "<li>" +
                             "<h3>Drop Settings Menu ALT+F</h3>" +
-                       "</li>" +
-                       "<li>" +
+                            "</li>" +
+                            "<li>" +
                             "<h3>Reload CTRL+R</h3>" +
-                       "</li>" +
-                       "<li>" +
-                       "<h3>Themes CTRL+T</h3>" +
-                       "</li>" +
-                       "<li>" +
+                            "</li>" +
+                            "<li>" +
+                            "<h3>Themes CTRL+T</h3>" +
+                            "</li>" +
+                            "<li>" +
                             "<h3>Exit CTRL+E</h3>" +
-                       "</li>" +
-               "</ul></html>");
-        reload.setToolTipText("<html><h3>Reload settings</h3></html>");
-        themes.setToolTipText("<html><h3>Change theme</h3></html>");
-        exit.setToolTipText("<html><h3>Exit</h3></html>");
+                            "</li>" +
+                            "</ul></html>");
+            reload.setToolTipText("<html><h3>Reload settings</h3></html>");
+            themes.setToolTipText("<html><h3>Change theme</h3></html>");
+            exit.setToolTipText("<html><h3>Exit</h3></html>");
+        }
 
         // shortcuts
         settings.setMnemonic('S');
@@ -94,11 +95,9 @@ public class Ui extends JFrame implements
         themes.setAccelerator(KeyStroke.getKeyStroke('T', Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
         exit.setAccelerator(KeyStroke.getKeyStroke('E', Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
 
-
-
         file_name_label.setText("File Name");
         file_name_textfield.putClientProperty("JComponent.roundRect", true);
-        fileExtensionsPanel: {
+        {
             file_type_label.setText("File Type");
             file_ext_combobox.putClientProperty("JComponent.roundRect", true);
             pdf_checkbox.setText("pdf");
@@ -107,19 +106,23 @@ public class Ui extends JFrame implements
             png_checkbox.setText("png");
             _exe_checkbox.setText("exe");
             _dmg_checkbox.setText("dmg");
-            file_ext_combobox.addItem("java");
-            file_ext_combobox.addItem("py");
-            file_ext_combobox.addItem("cpp");
-            file_ext_combobox.addItem("c");
-            file_ext_combobox.addItem("js");
-            file_ext_combobox.addItem("html");
-            file_ext_combobox.addItem("css");
-            group.add(pdf_checkbox);
-            group.add(docx_checkbox);
-            group.add(jpg_checkbox);
-            group.add(png_checkbox);
-            group.add(_exe_checkbox);
-            group.add(_dmg_checkbox);
+
+            // Add items to combobox
+            List<String> asList = Arrays.asList(
+                    "java", "py", "cpp",
+                    "c", "js", "html", "css");
+            for (String s : asList) {
+                file_ext_combobox.addItem(s);
+            }
+
+            // Add checkboxes to groupButton
+            List<JCheckBox> list = Arrays.asList(
+                    pdf_checkbox, docx_checkbox,
+                    jpg_checkbox, png_checkbox,
+                    _exe_checkbox, _dmg_checkbox);
+            for (JCheckBox jCheckBox : list) {
+                group.add(jCheckBox);
+            }
 
             checkboxes[0] = pdf_checkbox;
             checkboxes[1] = docx_checkbox;
@@ -131,13 +134,14 @@ public class Ui extends JFrame implements
                 checkboxes[i].addActionListener(this);
             }
 
+            // check Operating System the user is using.
             os = System.getProperty("os.name").toLowerCase();
             os_identifier = new OsIdentifier(os);
             if (os_identifier.is_windows()) {
-                System.out.println(os_identifier.getOs_name());
+                System.out.println(os_identifier.os_name());
                 _dmg_checkbox.setVisible(false);
             } else if (os_identifier.is_mac() || os_identifier.is_linux()) {
-                System.out.println(os_identifier.getOs_name());
+                System.out.println(os_identifier.os_name());
                 _exe_checkbox.setVisible(false);
             }
 
@@ -145,7 +149,7 @@ public class Ui extends JFrame implements
             link_textfield.putClientProperty("JComponent.roundRect", true);
 
             directories_label.setText("Directories");
-            directories_panel: {
+            {
                 desktop_radiobutton.setText("Desktop");
                 downloads_radiobutton.setText("Downloads");
                 onedrive_radiobutton.setText("OneDrive");
@@ -172,6 +176,8 @@ public class Ui extends JFrame implements
 
             download_button.setText("Download");
             download_button.putClientProperty("JButton.buttonType", "roundRect");
+
+            // Action Listeners
             download_button.addActionListener(this);
             themes.addActionListener(this);
             reload.addActionListener(this);
@@ -183,14 +189,11 @@ public class Ui extends JFrame implements
     }
 
     /**
-     * <p>
-     *     <h2>
-     *          This method is used to check if the user
-     *          has selected a checkbox or a radiobutton if
-     *          that's the case then enable the download button.
-     *     </h2>
-     * </p>
-     *
+     * <h2>
+     * This method is used to check if the user
+     * has selected a checkbox or a radiobutton if
+     * that's the case then enable the download button.
+     * </h2>
      */
     private void download_btn_enabler() {
         // check if the download button is clicked
@@ -221,13 +224,10 @@ public class Ui extends JFrame implements
 
 
     /**
-     * <p>
-     *     <h2>
-     *         This method is responsible for getting the directory and
-     *         downloading the file.
-     *     </h2>
-     * </p>
-     *
+     * <h2>
+     * This method is responsible for getting the directory and
+     * downloading the file.
+     * </h2>
      */
     public void download() {
         String get_link = link_textfield.getText();
@@ -248,7 +248,6 @@ public class Ui extends JFrame implements
 
         String[] dirs = new String[5];
         // get the directories
-
         String desktop = "";
         String documents = "";
         String downloads = "";
@@ -274,6 +273,7 @@ public class Ui extends JFrame implements
         dirs[3] = documents;
         dirs[4] = pictures;
 
+        // Download from the internet.
         for (int i = 0; i < 5; i++) {
             if (radioButtons[i].isSelected()) {
                 try {
@@ -284,6 +284,8 @@ public class Ui extends JFrame implements
                 System.out.println("Directory: " + dirs[i] + " File Name: " + get_file_name + "." + file_type);
             }
         }
+
+
         if (custom_radiobutton.isSelected()) {
             // choose the directory via JFileChooser
             JFileChooser fileChooser = new JFileChooser();
@@ -292,8 +294,8 @@ public class Ui extends JFrame implements
             if (return_value == JFileChooser.APPROVE_OPTION) {
                 String path = fileChooser.getSelectedFile().getPath();
                 String msg = """
-                           You have chosen the directory: \n\040
-                             """ + path;
+                        You have chosen the directory: \n\040
+                          """ + path;
                 UIManager.put("OptionPane.messageFont", new Font("JetBrainsMono Nerd Font Mono", Font.BOLD, 20));
                 JOptionPane.showMessageDialog(null, msg, "Success", INFORMATION);
                 try {
@@ -308,15 +310,13 @@ public class Ui extends JFrame implements
                 }
             } else {
                 String msg = """
-                            Please select a directory!
-                             """.indent(1);
+                        Please select a directory!
+                         """.indent(1);
                 UIManager.put("OptionPane.messageFont", new Font("JetBrainsMono Nerd Font Mono", Font.BOLD, 25));
                 JOptionPane.showMessageDialog(null, msg);
             }
         }
     }
-
-
 
 
     @Override
@@ -336,11 +336,10 @@ public class Ui extends JFrame implements
             for (int i = 0; i < 5; i++) {
                 group_2.clearSelection();
             }
-
             download_button.setEnabled(false);
-
         }
 
+        // enable the download if a radio button or a checkbox is selected
         download_btn_enabler();
 
         if (e.getSource() == download_button) {
