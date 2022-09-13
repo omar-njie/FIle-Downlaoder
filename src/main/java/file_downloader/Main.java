@@ -11,9 +11,6 @@ public class Main {
             //dark_mode.run();
             new Settings();
             new Ui();
-
-
-
         });
     }
 }
