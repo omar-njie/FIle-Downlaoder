@@ -4,29 +4,15 @@ import com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatLightOwlContra
 
 import javax.swing.*;
 
-public class Light implements Runnable {
+public class Light {
 
-    private final int thread_number;
 
-    public Light(int thread_number) {
-        this.thread_number = thread_number;
-    }
+    public static void light_mode() {
+        try {
+            UIManager.setLookAndFeel(new FlatLightOwlContrastIJTheme());
 
-    @Override
-    public void run() {
-        System.out.println("Light mode is on!");
-        for (int i = 0; 0 < 1; i++) {
-            System.out.println("Light Theme[" + i + "] running at " + thread_number);
-            try {
-                UIManager.setLookAndFeel(new FlatLightOwlContrastIJTheme());
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
