@@ -1,23 +1,25 @@
 package file_downloader;
 
 import themes.Dark;
+import themes.DefaultTheme;
 import themes.Light;
+import themes.WindowsLaF;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Settings extends JFrame implements Runnable, ActionListener {
+public class Settings extends JFrame
+        implements Runnable, ActionListener {
 
     private final JMenuBar menu_bar = new JMenuBar();
     private final JMenu settings = new JMenu("Settings");
     private final JMenuItem reload = new JMenuItem("Reload");
     private final JMenuItem exit = new JMenuItem("Exit");
-
+    private final ButtonGroup group = new ButtonGroup();
     private JPanel main_panel;
     private JLabel theme_label;
-    private final ButtonGroup group = new ButtonGroup();
     private JCheckBox dark_checkbox;
     private JCheckBox light_checkbox;
     private JCheckBox windows_LaF_checkbox;
@@ -25,40 +27,10 @@ public class Settings extends JFrame implements Runnable, ActionListener {
     private JButton clear_button;
     private JLabel dark_img;
     private JLabel light_img;
+    private JCheckBox default_checkbox;
 
     public Settings() {
         run();
-    }
-
-    @Override
-    public void run() {
-        this.setTitle("Theme Settings");
-        this.setContentPane(main_panel);
-        this.setJMenuBar(menu_bar);
-        this.setSize(395, 400);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setLocationRelativeTo(null);
-        this.setVisible(true);
-
-        menu_items(reload, exit, menu_bar, settings, exit);
-
-        theme_label.setText("Themes");
-        dark_checkbox.setText("Dark Mode");
-        light_checkbox.setText("Light Mode");
-        windows_LaF_checkbox.setText("Windows LaF");
-        clear_button.setText("Clear");
-        set_button.setText("Set Theme");
-
-        group.add(dark_checkbox);
-        group.add(light_checkbox);
-        group.add(windows_LaF_checkbox);
-
-        reload.addActionListener(this);
-        exit.addActionListener(this);
-        clear_button.addActionListener(this);
-        set_button.addActionListener(this);
-
-
     }
 
     static void menu_items(JMenuItem reload, JMenuItem exit, JMenuBar menu_bar, JMenu settings, JMenuItem exit2) {
@@ -71,6 +43,39 @@ public class Settings extends JFrame implements Runnable, ActionListener {
         settings.add(exit2);
     }
 
+    @Override
+    public void run() {
+        this.setTitle("Theme Settings");
+        this.setContentPane(main_panel);
+        this.setJMenuBar(menu_bar);
+        this.setSize(399, 415);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setLocationRelativeTo(null);
+        this.setVisible(true);
+
+        menu_items(reload, exit, menu_bar, settings, exit);
+
+        theme_label.setText("Themes");
+        dark_checkbox.setText("Dark Mode Contrast");
+        light_checkbox.setText("Light Mode");
+        windows_LaF_checkbox.setText("Windows LaF");
+        default_checkbox.setText("Default Dark Theme");
+        clear_button.setText("Clear");
+        set_button.setText("Set Theme");
+
+        group.add(dark_checkbox);
+        group.add(light_checkbox);
+        group.add(windows_LaF_checkbox);
+        group.add(default_checkbox);
+        default_checkbox.setSelected(true);
+
+        reload.addActionListener(this);
+        exit.addActionListener(this);
+        clear_button.addActionListener(this);
+        set_button.addActionListener(this);
+
+
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -87,31 +92,35 @@ public class Settings extends JFrame implements Runnable, ActionListener {
         }
 
         if (e.getSource() == set_button) {
-            for (int i = 0; i <= 2; i++) {
-                Dark dark_mode = new Dark(i);
-                Light light_mode = new Light(i);
-                Thread dark_theme_thread = new Thread(dark_mode);
-                Thread light_theme_thread = new Thread(light_mode);
-                if (dark_checkbox.isSelected()) {
-                    dark_theme_thread.start();
-                    Ui ui = new Ui();
-                    Thread ui_thread = new Thread(ui);
-                    ui_thread.start();
-                    this.update(this.getGraphics());
-                }
 
-                if (light_checkbox.isSelected()) {
-                    light_theme_thread.start();
-                    new Ui();
-                    this.repaint();
-                }
+            if (default_checkbox.isSelected()) {
+                DefaultTheme.default_theme();
+                this.dispose();
+                ui_thread_starter();
             }
+            if (dark_checkbox.isSelected()) {
+                Dark.dark_mode();
+                this.dispose();
+                ui_thread_starter();
+
+            }
+            if (light_checkbox.isSelected()) {
+                Light.light_mode();
+                this.dispose();
+                ui_thread_starter();
+            }
+            if (windows_LaF_checkbox.isSelected()) {
+                WindowsLaF.windows_LaF();
+                this.dispose();
+                ui_thread_starter();
+            }
+
         }
     }
-    public static void main(String[] args) {
-       // Dark dark_mode = new Dark();
-       // dark_mode.run();
-        new Settings();
+
+    private void ui_thread_starter() {
+        new Thread(Ui::new).start();
+        this.update(this.getGraphics());
     }
 }
 
