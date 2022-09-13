@@ -9,15 +9,19 @@ import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.List;
 
-import static javax.security.auth.callback.ConfirmationCallback.INFORMATION;
-
-public class Ui extends JFrame implements
-        ActionListener, Runnable {
+public class Ui extends JFrame implements ActionListener, Runnable {
 
     private final JCheckBox[] checkboxes = new JCheckBox[6];
     private final ButtonGroup group = new ButtonGroup();
     private final ButtonGroup group_2 = new ButtonGroup();
     private final JRadioButton[] radioButtons = new JRadioButton[5];
+    private final JMenuBar menu_bar = new JMenuBar();
+    private final JMenu settings = new JMenu("Settings");
+    private final JMenuItem reload = new JMenuItem("Reload");
+    private final JMenuItem themes = new JMenuItem("Themes");
+    private final JMenuItem exit = new JMenuItem("Exit");
+    public String os;
+    OsIdentifier os_identifier;
     private JPanel main_panel;
     private JLabel file_name_label;
     private JTextField file_name_textfield;
@@ -44,13 +48,10 @@ public class Ui extends JFrame implements
     private JCheckBox _exe_checkbox;
     private JCheckBox _dmg_checkbox;
 
-    private final JMenuBar menu_bar = new JMenuBar();
-    private final JMenu settings = new JMenu("Settings");
-    private final JMenuItem reload = new JMenuItem("Reload");
-    private final JMenuItem themes = new JMenuItem("Themes");
-    private final JMenuItem exit = new JMenuItem("Exit");
-    public String os;
-    OsIdentifier os_identifier;
+
+    public Ui() {
+        run();
+    }
 
     @Override
     public void run() {
@@ -69,21 +70,7 @@ public class Ui extends JFrame implements
 
         // Tooltips Tests
         {
-            settings.setToolTipText(
-                    "<html><ul>" +
-                            "<li>" +
-                            "<h3>Drop Settings Menu ALT+F</h3>" +
-                            "</li>" +
-                            "<li>" +
-                            "<h3>Reload CTRL+R</h3>" +
-                            "</li>" +
-                            "<li>" +
-                            "<h3>Themes CTRL+T</h3>" +
-                            "</li>" +
-                            "<li>" +
-                            "<h3>Exit CTRL+E</h3>" +
-                            "</li>" +
-                            "</ul></html>");
+            settings.setToolTipText("<html><ul>" + "<li>" + "<h3>Drop Settings Menu ALT+F</h3>" + "</li>" + "<li>" + "<h3>Reload CTRL+R</h3>" + "</li>" + "<li>" + "<h3>Themes CTRL+T</h3>" + "</li>" + "<li>" + "<h3>Exit CTRL+E</h3>" + "</li>" + "</ul></html>");
             reload.setToolTipText("<html><h3>Reload settings</h3></html>");
             themes.setToolTipText("<html><h3>Change theme</h3></html>");
             exit.setToolTipText("<html><h3>Exit</h3></html>");
@@ -108,18 +95,13 @@ public class Ui extends JFrame implements
             _dmg_checkbox.setText("dmg");
 
             // Add items to combobox
-            List<String> asList = Arrays.asList(
-                    "java", "py", "cpp",
-                    "c", "js", "html", "css");
+            List<String> asList = Arrays.asList("java", "py", "cpp", "c", "js", "html", "css");
             for (String s : asList) {
                 file_ext_combobox.addItem(s);
             }
 
             // Add checkboxes to groupButton
-            List<JCheckBox> list = Arrays.asList(
-                    pdf_checkbox, docx_checkbox,
-                    jpg_checkbox, png_checkbox,
-                    _exe_checkbox, _dmg_checkbox);
+            List<JCheckBox> list = Arrays.asList(pdf_checkbox, docx_checkbox, jpg_checkbox, png_checkbox, _exe_checkbox, _dmg_checkbox);
             for (JCheckBox jCheckBox : list) {
                 group.add(jCheckBox);
             }
@@ -134,7 +116,7 @@ public class Ui extends JFrame implements
                 checkboxes[i].addActionListener(this);
             }
 
-            // check Operating System the user is using.
+            // check which Operating System the user is using.
             os = System.getProperty("os.name").toLowerCase();
             os_identifier = new OsIdentifier(os);
             if (os_identifier.is_windows()) {
@@ -260,8 +242,7 @@ public class Ui extends JFrame implements
             pictures = System.getProperty("user.home") + "\\Pictures\\";
             onedrive = System.getProperty("user.home") + "\\OneDrive\\";
         }
-        if (os_identifier.is_mac()
-                || os_identifier.is_linux()) {
+        if (os_identifier.is_mac() || os_identifier.is_linux()) {
             desktop = System.getProperty("user.home") + "/Desktop/";
             documents = System.getProperty("user.home") + "/Documents/";
             downloads = System.getProperty("user.home") + "/Downloads/";
@@ -297,12 +278,11 @@ public class Ui extends JFrame implements
                         You have chosen the directory: \n\040
                           """ + path;
                 UIManager.put("OptionPane.messageFont", new Font("JetBrainsMono Nerd Font Mono", Font.BOLD, 20));
-                JOptionPane.showMessageDialog(null, msg, "Success", INFORMATION);
+                JOptionPane.showMessageDialog(null, msg, "Success", JOptionPane.ERROR_MESSAGE);
                 try {
                     if (os_identifier.is_windows()) {
                         new Downloader(new URL(get_link), path + "\\" + get_file_name + "." + file_type);
-                    } else if (os_identifier.is_mac()
-                            || os_identifier.is_linux()) {
+                    } else if (os_identifier.is_mac() || os_identifier.is_linux()) {
                         new Downloader(new URL(get_link), path + "/" + get_file_name + "." + file_type);
                     }
                 } catch (Exception ex) {
@@ -324,6 +304,26 @@ public class Ui extends JFrame implements
         if (e.getSource() == exit) {
             System.exit(0);
         }
+
+        if (e.getSource() == themes) {
+            UIManager.put("OptionPane.messageFont", new Font("JetBrainsMono Nerd Font Mono", Font.BOLD, 20));
+            UIManager.put("OptionPane.buttonFont", new Font("JetBrainsMono Nerd Font Mono", Font.BOLD, 20));
+            String msg = """
+                    Are you sure you want\040
+                    to change the theme?
+                    If you choose so this
+                    will restart the app.
+                    """.indent(1);
+            int option = JOptionPane.showConfirmDialog(null, msg, "Change Theme", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (option == JOptionPane.OK_OPTION) {
+                this.dispose();
+                new Settings();
+            } else if (option == JOptionPane.CANCEL_OPTION) {
+                UIManager.put("OptionPane.messageFont", new Font("JetBrainsMono Nerd Font Mono", Font.BOLD, 20));
+                JOptionPane.showMessageDialog(null, "You have cancelled the operation", "Cancelled", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+
         if (e.getSource() == reload) {
             file_name_textfield.setText("");
             file_ext_combobox.setSelectedIndex(0);
