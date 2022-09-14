@@ -3,3 +3,4 @@
 /target/**
 /.idea/**
 /File-Downloader.iml
+.DS_Store
