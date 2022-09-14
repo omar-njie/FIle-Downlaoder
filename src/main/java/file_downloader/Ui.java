@@ -96,15 +96,13 @@ public class Ui extends JFrame implements ActionListener, Runnable {
 
             // Add items to combobox
             List<String> asList = Arrays.asList("java", "py", "cpp", "c", "js", "html", "css");
-            for (String s : asList) {
+            for (String s : asList)
                 file_ext_combobox.addItem(s);
-            }
 
             // Add checkboxes to groupButton
             List<JCheckBox> list = Arrays.asList(pdf_checkbox, docx_checkbox, jpg_checkbox, png_checkbox, _exe_checkbox, _dmg_checkbox);
-            for (JCheckBox jCheckBox : list) {
+            for (JCheckBox jCheckBox : list)
                 group.add(jCheckBox);
-            }
 
             checkboxes[0] = pdf_checkbox;
             checkboxes[1] = docx_checkbox;
@@ -112,9 +110,8 @@ public class Ui extends JFrame implements ActionListener, Runnable {
             checkboxes[3] = png_checkbox;
             checkboxes[4] = _exe_checkbox;
             checkboxes[5] = _dmg_checkbox;
-            for (int i = 0; i < 6; i++) {
+            for (int i = 0; i < 6; i++)
                 checkboxes[i].addActionListener(this);
-            }
 
             // check which Operating System the user is using.
             os = System.getProperty("os.name").toLowerCase();
@@ -301,9 +298,8 @@ public class Ui extends JFrame implements ActionListener, Runnable {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == exit) {
+        if (e.getSource() == exit)
             System.exit(0);
-        }
 
         if (e.getSource() == themes) {
             UIManager.put("OptionPane.messageFont", new Font("JetBrainsMono Nerd Font Mono", Font.BOLD, 20));
@@ -329,22 +325,19 @@ public class Ui extends JFrame implements ActionListener, Runnable {
             file_ext_combobox.setSelectedIndex(0);
             link_textfield.setText("");
 
-            for (int i = 0; i < 6; i++) {
+            for (int i = 0; i < 6; i++)
                 group.clearSelection();
-            }
 
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < 5; i++)
                 group_2.clearSelection();
-            }
             download_button.setEnabled(false);
         }
 
         // enable the download if a radio button or a checkbox is selected
         download_btn_enabler();
 
-        if (e.getSource() == download_button) {
+        if (e.getSource() == download_button)
             download();
-        }
     }
 }
 
