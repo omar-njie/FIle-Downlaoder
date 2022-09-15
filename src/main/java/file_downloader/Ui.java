@@ -275,7 +275,7 @@ public class Ui extends JFrame implements ActionListener, Runnable {
                         You have chosen the directory: \n\040
                           """ + path;
                 UIManager.put("OptionPane.messageFont", new Font("JetBrainsMono Nerd Font Mono", Font.BOLD, 20));
-                JOptionPane.showMessageDialog(null, msg, "Success", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, msg, "Success", JOptionPane.INFORMATION_MESSAGE);
                 try {
                     if (os_identifier.is_windows()) {
                         new Downloader(new URL(get_link), path + "\\" + get_file_name + "." + file_type);
