@@ -56,6 +56,7 @@ public class Ui extends JFrame implements ActionListener, Runnable {
     @Override
     public void run() {
         this.setTitle("File Downloader");
+        this.getRootPane().putClientProperty("apple.awt.windowTitleVisible", false);
         this.setContentPane(main_panel);
         this.setJMenuBar(menu_bar);
         this.setSize(500, 485);
@@ -96,8 +97,9 @@ public class Ui extends JFrame implements ActionListener, Runnable {
 
             // Add items to combobox
             List<String> asList = Arrays.asList("java", "py", "cpp", "c", "js", "html", "css");
-            for (String s : asList)
+            for (String s : asList) {
                 file_ext_combobox.addItem(s);
+            }
 
             // Add checkboxes to groupButton
             List<JCheckBox> list = Arrays.asList(pdf_checkbox, docx_checkbox, jpg_checkbox, png_checkbox, _exe_checkbox, _dmg_checkbox);
@@ -213,14 +215,15 @@ public class Ui extends JFrame implements ActionListener, Runnable {
         String get_file_name = file_name_textfield.getText();
         String file_type = "";
 
-        // loop through checkboxes to get file type
+        // loop through checkboxes to get file type text
         for (JCheckBox checkbox : checkboxes) {
             if (checkbox.isSelected()) {
                 file_type = checkbox.getText();
             }
         }
 
-        if (os_identifier.isMacOrLinux(file_name_textfield.getText().isEmpty(), link_textfield.getText().isEmpty())) {
+        if (os_identifier.isMacOrLinux(file_name_textfield
+                .getText().isEmpty(), link_textfield.getText().isEmpty())) {
             UIManager.put("OptionPane.messageFont", new Font("JetBrainsMono Nerd Font Mono", Font.BOLD, 25));
             JOptionPane.showMessageDialog(null, "Please fill all the fields", "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -263,7 +266,11 @@ public class Ui extends JFrame implements ActionListener, Runnable {
             }
         }
 
+        directory_selector(get_link, get_file_name, file_type);
+    }
 
+
+    private void directory_selector(String get_link, String get_file_name, String file_type) {
         if (custom_radiobutton.isSelected()) {
             // choose the directory via JFileChooser
             JFileChooser fileChooser = new JFileChooser();
@@ -301,24 +308,7 @@ public class Ui extends JFrame implements ActionListener, Runnable {
         if (e.getSource() == exit)
             System.exit(0);
 
-        if (e.getSource() == themes) {
-            UIManager.put("OptionPane.messageFont", new Font("JetBrainsMono Nerd Font Mono", Font.BOLD, 20));
-            UIManager.put("OptionPane.buttonFont", new Font("JetBrainsMono Nerd Font Mono", Font.BOLD, 20));
-            String msg = """
-                    Are you sure you want\040
-                    to change the theme?
-                    If you choose so this
-                    will restart the app.
-                    """.indent(1);
-            int option = JOptionPane.showConfirmDialog(null, msg, "Change Theme", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
-            if (option == JOptionPane.OK_OPTION) {
-                this.dispose();
-                new Settings();
-            } else if (option == JOptionPane.CANCEL_OPTION) {
-                UIManager.put("OptionPane.messageFont", new Font("JetBrainsMono Nerd Font Mono", Font.BOLD, 20));
-                JOptionPane.showMessageDialog(null, "You have cancelled the operation", "Cancelled", JOptionPane.ERROR_MESSAGE);
-            }
-        }
+        theme_menu_item(e);
 
         if (e.getSource() == reload) {
             file_name_textfield.setText("");
@@ -338,6 +328,28 @@ public class Ui extends JFrame implements ActionListener, Runnable {
 
         if (e.getSource() == download_button)
             download();
+    }
+
+
+    private void theme_menu_item(ActionEvent e) {
+        if (e.getSource() == themes) {
+            UIManager.put("OptionPane.messageFont", new Font("JetBrainsMono Nerd Font Mono", Font.BOLD, 20));
+            UIManager.put("OptionPane.buttonFont", new Font("JetBrainsMono Nerd Font Mono", Font.BOLD, 20));
+            String msg = """
+                    Are you sure you want\040
+                    to change the theme?
+                    If you choose so this
+                    will restart the app.
+                    """.indent(1);
+            int option = JOptionPane.showConfirmDialog(null, msg, "Change Theme", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (option == JOptionPane.OK_OPTION) {
+                this.dispose();
+                new Settings();
+            } else if (option == JOptionPane.CANCEL_OPTION) {
+                UIManager.put("OptionPane.messageFont", new Font("JetBrainsMono Nerd Font Mono", Font.BOLD, 20));
+                JOptionPane.showMessageDialog(null, "You have cancelled the operation", "Cancelled", JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }
 }
 
