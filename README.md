@@ -9,8 +9,8 @@
 * FileUtils from apache commons api
 ---
 
-## Jar Files
-[Download the Jar files](https://github.com/omar-njie/FIle-Downlaoder/tree/main/out/artifacts/File_Downloader_jar)
+## Jar File
+[Download the Jar files](https://github.com/omar-njie/FIle-Downlaoder/blob/main/Jar-File/File-Downloader.jar)
 
 ---
 ## Features
@@ -18,4 +18,5 @@
 * ### Themes
   - Dark Mode
   - Light Mode
+  - Windows LaF
 
