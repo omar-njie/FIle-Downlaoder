@@ -8,7 +8,7 @@ import java.net.URL;
 public class Downloader {
 
     Downloader(URL url, String file_name) throws Exception {
-        new DownloadProgress();
+        new DownloadProgress(100, 0);
         FileUtils.copyURLToFile(url, new File(file_name));
         System.out.println("Download Completed Successfully!!!");
     }
